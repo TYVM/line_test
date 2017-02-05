@@ -11,19 +11,23 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(bodyParser.json());
 
+app.get('/', function (req, res) {
+  res.send('Hello World!');
+});
 app.post('/callback', function (req, res) {
-  if (!validate_signature(req.headers['x-line-signature'], req.body)) {
+  if (!validate_signature(req.headers['X-Line-Signature'], req.body)) {
     return;
   }
+
   var headers = {
     'Content-Type' : 'application/json',
     'Authorization': 'Bearer {' + process.env.LINE_CHANNEL_ACCESS_TOKEN + '}'
   };
   var data = {
-      replyToken: req.body.events[0].replyToken,
-      messages: [{
-          'type': 'text',
-          'text': 'Hello.world!'
+      'replyToken': req.body['events'][0]['replyToken'],
+      "messages": [{
+          "type": "text",
+          "text": 'Hello.world!'
       }]
   };
   var options = {
