@@ -29,14 +29,13 @@ app.post('/callback', function (req, res) {
       body: data
   };
   request.post(options, function(err, res, body) {
-                  if (!error && response.statusCode == 200) {
-                      console.log(body);
-                  } else {
-                      console.log('error: ' + JSON.stringify(response));
-                  }
-              });
+    if (!err && res.statusCode == 200) {
+      console.log(body);
+    } else {
+      console.log('err: ' + JSON.stringify(res));
+    }
+  });
 });
-
 
 app.listen(app.get('port'), function() {
     console.log('Node app is running');
