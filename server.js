@@ -1,18 +1,22 @@
 var express = require('express');
 var app = express();
+var bodyParser = require('body-parser');
+var request = require('request');
 
-app.get('/', function (req, res) {
-  res.send('Hello World!');
-});
+app.set('port', (process.env.PORT || 8000));
 
-/*
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
+app.use(bodyParser.json());
+
 app.post('/callback', function (req, res) {
   var headers = {
       'Content-Type' : 'application/json; charset=UTF-8',
       'Authorization': 'Bearer [ZwkXpP/odhUEGquLu0bAhpQF6/++w6/f2y5nqP+cr/LxEHEjM1POAp/D/oulK3JPiF0onMa8Br7iqiBXrgEuEzMa/9GjRCai0X/VNrDxDj9yrY1ohGVvCAwnPy+Fok84gpV9gfvZbgSdUn5iYGEHnAdB04t89/1O/w1cDnyilFU=]'
   };
   var data = {
-      to: 'XXXXXXXXX',
+      replyToken: req.body.events[0].replyToken,
       messages: [{
           'type': 'text',
           'text': 'Hello.world!'
@@ -24,11 +28,16 @@ app.post('/callback', function (req, res) {
       json: true,
       body: data
   };
-  res.send(data);
-  console.log(data);
+  request.post(options, function(err, res, body) {
+                  if (!error && response.statusCode == 200) {
+                      console.log(body);
+                  } else {
+                      console.log('error: ' + JSON.stringify(response));
+                  }
+              });
 });
-*/
 
-app.listen(3000, function () {
-  console.log('Example app listening on port 3000!');
+
+app.listen(app.get('port'), function() {
+    console.log('Node app is running');
 });
