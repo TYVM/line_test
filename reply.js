@@ -1,6 +1,11 @@
 var express = require('express');
 var app = express();
 
+app.get('/', function (req, res) {
+  res.send('Hello World!');
+});
+
+/*
 app.post('/callback', function (req, res) {
   var headers = {
       'Content-Type' : 'application/json; charset=UTF-8',
@@ -22,6 +27,7 @@ app.post('/callback', function (req, res) {
   res.send(data);
   console.log(data);
 });
+*/
 
 app.listen(3000, function () {
   console.log('Example app listening on port 3000!');
