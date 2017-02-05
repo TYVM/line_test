@@ -12,8 +12,8 @@ app.use(bodyParser.json());
 
 app.post('/callback', function (req, res) {
   var headers = {
-      'Content-Type' : 'application/json; charset=UTF-8',
-      'Authorization': 'Bearer [ZwkXpP/odhUEGquLu0bAhpQF6/++w6/f2y5nqP+cr/LxEHEjM1POAp/D/oulK3JPiF0onMa8Br7iqiBXrgEuEzMa/9GjRCai0X/VNrDxDj9yrY1ohGVvCAwnPy+Fok84gpV9gfvZbgSdUn5iYGEHnAdB04t89/1O/w1cDnyilFU=]'
+    'Content-Type' : 'application/json; charset=UTF-8',
+    'Authorization': 'Bearer {' + process.env.LINE_CHANNEL_ACCESS_TOKEN + '}'
   };
   var data = {
       replyToken: req.body.events[0].replyToken,
@@ -24,7 +24,7 @@ app.post('/callback', function (req, res) {
   };
   var options = {
       url: 'https://api.line.me/v2/bot/message/reply',
-      proxy : 'http://fixie:cX9CfjH1C7LyKnO@velodrome.usefixie.com:80',
+      proxy : process.env.FIXIE_URL,
       headers: headers,
       json: true,
       body: data
