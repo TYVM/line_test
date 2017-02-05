@@ -24,15 +24,16 @@ app.post('/callback', function (req, res) {
   };
   var options = {
       url: 'https://api.line.me/v2/bot/message/reply',
+      proxy : 'http://fixie:cX9CfjH1C7LyKnO@velodrome.usefixie.com:80',
       headers: headers,
       json: true,
       body: data
   };
-  request.post(options, function(err, res, body) {
-    if (!err && res.statusCode == 200) {
+  request.post(options, function(error, response, body){
+    if (!error && response.statusCode == 200) {
       console.log(body);
     } else {
-      console.log('err: ' + JSON.stringify(res));
+      console.log('error: ' + JSON.stringify(response));
     }
   });
 });
