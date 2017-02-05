@@ -12,8 +12,11 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json());
 
 app.post('/callback', function (req, res) {
+  if (!validate_signature(req.headers['x-line-signature'], req.body)) {
+    return;
+  }
   var headers = {
-    'Content-Type' : 'application/json; charset=UTF-8',
+    'Content-Type' : 'application/json',
     'Authorization': 'Bearer {' + process.env.LINE_CHANNEL_ACCESS_TOKEN + '}'
   };
   var data = {
